@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Un universo para ti</title>
+    <link rel="stylesheet" href="m.css">
+</head>
+<body>
+
+    <div id="stars" class="stars" aria-label="Estrellas para descubrir mensajes"></div>
+    <p class="corner-message">Con mucho amor, tu novio *_*</p>
+    <div class="planet-showcase" aria-live="polite">
+        <div id="planet" class="planet planet-earth"></div>
+        <p id="planet-name">La Tierra</p>
+    </div>
+    <main>
+        <p class="eyebrow">PARA TI, MI AMOR</p>
+        <h1>En todo mi universo, tú eres mi estrella ✨</h1>
+        <p class="intro">Pulsa una estrella para acercarte a un nuevo planeta y descubrir un mensaje para ti.</p>
+        <button id="love-button" type="button">Explorar otra estrella 💖</button>
+        <p id="love-message" class="love-message show" aria-live="polite">Te amo, amor ❤️</p>
+    </main>
+
+    <script>
+        const stars = document.querySelector("#stars");
+        const button = document.querySelector("#love-button");
+        const message = document.querySelector("#love-message");
+        message.textContent = "Te amo, amor ❤️";
+        message.classList.add("show");
+        const phrases = [
+            "Eres mi lugar favorito en todo el universo. 🌙",
+            "Contigo, hasta los días nublados tienen estrellas. ✨",
+            "Tu sonrisa ilumina más que mil galaxias. 💫",
+            "Te elegiría en esta vida y en todas las demás. 💖",
+            "Mi corazón encontró su hogar cuando te encontró a ti. 🏡",
+            "Cada momento contigo se convierte en mi recuerdo favorito. 🌷",
+            "No necesito pedir un deseo: ya te tengo a ti. 🌠",
+            "Eres mi casualidad más bonita y mi amor más grande. ❤️",
+            "Si el amor fuera un universo, tú serías todo el mío. 🌌",
+            "Te amo más de lo que caben las palabras y las estrellas."
+        ];
+        let phraseIndex = 0;
+        const planet = document.querySelector("#planet");
+        const planetName = document.querySelector("#planet-name");
+        const planets = [
+            ["planet-earth", "La Tierra"],
+            ["planet-mars", "Marte"],
+            ["planet-jupiter", "Júpiter"],
+            ["planet-saturn", "Saturno"],
+            ["planet-neptune", "Neptuno"],
+            ["planet-venus", "Venus"]
+        ];
+        let planetIndex = 0;
+        const starPositions = [
+            [12, 18], [28, 72], [46, 24], [64, 78],
+            [82, 20], [90, 58], [18, 48], [73, 42]
+        ];
+
+        let planetChangeTimeout;
+        starPositions.forEach(([left, top], index) => {
+            const star = document.createElement("button");
+            star.className = "star-button";
+            star.type = "button";
+            star.style.left = `${left}%`;
+            star.style.top = `${top}%`;
+            star.setAttribute("aria-label", `Descubrir estrella ${index + 1}`);
+            star.textContent = "✦";
+            star.addEventListener("click", () => discoverStar(star));
+            stars.appendChild(star);
+        });
+
+        function changePlanet() {
+            clearTimeout(planetChangeTimeout);
+            planet.classList.remove("planet-visible");
+            planet.classList.add("planet-changing");
+            planetChangeTimeout = setTimeout(() => {
+                planetIndex = (planetIndex + 1) % planets.length;
+                planet.className = `planet ${planets[planetIndex][0]}`;
+                planetName.textContent = planets[planetIndex][1];
+                requestAnimationFrame(() => planet.classList.add("planet-visible"));
+            }, 350);
+        }
+
+        function showMessageAtStar() {
+            message.classList.remove("show");
+            message.textContent = phrases[phraseIndex];
+            phraseIndex = (phraseIndex + 1) % phrases.length;
+            requestAnimationFrame(() => message.classList.add("show"));
+        }
+
+        function discoverStar(star) {
+            showMessageAtStar();
+            star.classList.add("star-discovered");
+            changePlanet();
+        }
+
+        button.addEventListener("click", () => {
+            const nextStar = [...stars.querySelectorAll(".star-button")]
+                .find(star => !star.classList.contains("star-discovered"))
+                || stars.querySelector(".star-button");
+            discoverStar(nextStar);
+        });
+        planet.classList.add("planet-visible");
+    </script>
+</body>
+</html>

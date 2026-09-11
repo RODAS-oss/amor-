@@ -1,0 +1,333 @@
+body {
+    background:
+        radial-gradient(circle at 20% 20%, rgba(138, 92, 246, 0.35), transparent 28%),
+        radial-gradient(circle at 80% 18%, rgba(255, 94, 169, 0.35), transparent 26%),
+        radial-gradient(circle at 50% 72%, rgba(255, 196, 228, 0.16), transparent 30%),
+        #05051a;
+    color: #fff;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+    min-height: 100vh;
+    margin: 0;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    position: relative;
+}
+
+body::before,
+body::after,
+.stars {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+body::before {
+    background:
+        radial-gradient(circle at 15% 25%, rgba(112, 64, 168, 0.8) 0, transparent 25%),
+        radial-gradient(circle at 85% 75%, rgba(232, 62, 140, 0.7) 0, transparent 28%),
+        radial-gradient(circle at 50% 40%, rgba(31, 14, 74, 0.96) 0, transparent 55%);
+}
+
+body::after {
+    opacity: 0.95;
+    background-image:
+        radial-gradient(circle, rgba(255,255,255,0.92) 0 1px, transparent 1.6px),
+        radial-gradient(circle, rgba(255,214,246,0.9) 0 1px, transparent 1.6px),
+        radial-gradient(circle, rgba(158,215,255,0.8) 0 1.5px, transparent 2.2px);
+    background-position: 0 0, 45px 60px;
+    background-size: 95px 95px, 130px 130px, 240px 240px;
+    animation: drift 24s linear infinite, twinkle 4s ease-in-out infinite alternate;
+}
+
+.stars {
+    z-index: 1;
+    background-image:
+        radial-gradient(circle at 15% 25%, rgba(255,255,255,0.9) 0 1.5px, transparent 2px),
+        radial-gradient(circle at 70% 70%, rgba(185, 231, 255, 0.95) 0 1.5px, transparent 2px),
+        radial-gradient(circle at 90% 15%, rgba(255,255,255,0.9) 0 2.2px, transparent 3px);
+    background-size: 180px 180px, 230px 230px, 310px 310px;
+    opacity: 0.7;
+    animation: drift 40s linear infinite reverse;
+    pointer-events: auto;
+}
+
+.star-button {
+    position: absolute;
+    z-index: 1;
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #fff8c7;
+    font-size: 30px;
+    line-height: 1;
+    text-shadow: 0 0 10px #fff, 0 0 24px #ffb7e7;
+    cursor: pointer;
+    animation: star-pulse 2s ease-in-out infinite alternate;
+    transition: opacity 0.4s ease, transform 0.7s ease, color 0.4s ease;
+    pointer-events: auto;
+}
+
+.star-button:hover,
+.star-button:focus-visible {
+    color: #fff;
+    outline: none;
+    transform: scale(1.35);
+}
+
+.star-button.star-discovered {
+    color: transparent;
+    font-size: 0;
+    background:
+        radial-gradient(circle at 30% 25%, #ffffff66 0 8%, transparent 9%),
+        linear-gradient(135deg, #6ed7ff, #5542c5 60%, #1b174d);
+    border-radius: 50%;
+    box-shadow: inset -8px -6px 8px #0008, 0 0 18px #8c7bff;
+    transform: scale(2.2);
+    opacity: 0.25;
+    pointer-events: none;
+    animation: planet-orbit 1.1s ease-out forwards;
+}
+
+.planet-showcase {
+    position: fixed;
+    top: 28px;
+    left: 28px;
+    z-index: 2;
+    width: 130px;
+    color: #ead9e8;
+    font-size: 14px;
+}
+
+.planet {
+    position: relative;
+    width: 92px;
+    height: 92px;
+    margin: 0 auto;
+    border-radius: 50%;
+    overflow: visible;
+    box-shadow: inset -18px -12px 22px #000b, inset 8px 6px 12px #ffffff44, 0 0 22px #ffffff55;
+    transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.planet::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background:
+        radial-gradient(ellipse at 30% 20%, #ffffff55, transparent 18%),
+        repeating-radial-gradient(ellipse at 65% 45%, transparent 0 9px, #00000012 10px 12px);
+    mix-blend-mode: overlay;
+    pointer-events: none;
+}
+
+.planet-showcase p {
+    margin: 10px 0 0;
+}
+
+.planet-changing {
+    opacity: 0;
+    transform: translateX(-30px) scale(0.65) rotate(-25deg);
+}
+
+.planet-visible {
+    opacity: 1;
+    transform: translateX(0) scale(1) rotate(0);
+}
+
+.planet-earth {
+    background:
+        radial-gradient(ellipse at 34% 35%, #5dbb68 0 12%, transparent 13%),
+        radial-gradient(ellipse at 65% 65%, #4f9c58 0 16%, transparent 17%),
+        linear-gradient(135deg, #5ac8ed, #2361b5 58%, #112e69);
+}
+
+.planet-mars {
+    background:
+        radial-gradient(circle at 65% 35%, #7e241b 0 8%, transparent 9%),
+        radial-gradient(ellipse at 30% 70%, #d86b43 0 13%, transparent 14%),
+        linear-gradient(135deg, #f08455, #a52f24 60%, #5e1b2d);
+}
+
+.planet-jupiter {
+    background:
+        radial-gradient(ellipse at 70% 67%, #a6533d 0 8%, transparent 9%),
+        repeating-linear-gradient(175deg, #d9b27c 0 10px, #8d5f43 11px 17px, #f1d7a6 18px 25px);
+}
+
+.planet-saturn {
+    background:
+        radial-gradient(ellipse at 35% 30%, #fff2b6 0 8%, transparent 9%),
+        linear-gradient(135deg, #f6d28b, #9e6b42);
+    position: relative;
+}
+
+.planet-saturn::after {
+    content: "";
+    position: absolute;
+    width: 132px;
+    height: 26px;
+    top: 33px;
+    left: -20px;
+    border: 5px solid #e8c989aa;
+    border-radius: 50%;
+    transform: rotate(-18deg);
+}
+
+.planet-neptune {
+    background:
+        repeating-linear-gradient(175deg, transparent 0 9px, #ffffff18 10px 12px),
+        linear-gradient(135deg, #72b9ff, #263eaa 65%, #151d66);
+}
+
+.planet-venus {
+    background:
+        repeating-linear-gradient(165deg, transparent 0 8px, #fff3c526 9px 12px),
+        linear-gradient(135deg, #ffe0a3, #c47c52 55%, #743e49);
+}
+
+.corner-message {
+    position: fixed;
+    right: 20px;
+    bottom: 16px;
+    z-index: 2;
+    max-width: 220px;
+    margin: 0;
+    color: #ffc4df;
+    font-size: 14px;
+    line-height: 1.4;
+    text-align: right;
+    text-shadow: 0 0 10px #ff63ae;
+}
+
+main {
+    position: relative;
+    z-index: 1;
+    width: min(90%, 720px);
+    padding: 42px 26px 20px;
+}
+
+.eyebrow {
+    color: #ff9dd4;
+    letter-spacing: 5px;
+    font-size: 12px;
+    font-weight: 900;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+}
+
+h1 {
+    color: #ffe7f4;
+    font-size: clamp(32px, 7vw, 60px);
+    line-height: 1.1;
+    text-shadow: 0 0 20px rgba(255, 99, 174, 0.82), 0 0 44px rgba(164, 120, 255, 0.45);
+    margin: 18px 0 18px;
+    letter-spacing: -0.04em;
+}
+
+.intro {
+    color: rgba(234, 217, 232, 0.96);
+    font-size: clamp(17px, 2.2vw, 22px);
+    line-height: 1.5;
+    max-width: 640px;
+    margin: 0 auto 26px;
+}
+
+button {
+    background: linear-gradient(135deg, #ff5db1 0%, #d948c0 25%, #8d5bff 72%, #6d5efc 100%);
+    color: #fff;
+    padding: 16px 30px;
+    border: 1px solid rgba(255, 255, 255, 0.42);
+    border-radius: 999px;
+    cursor: pointer;
+    font-size: clamp(18px, 2vw, 22px);
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    box-shadow: 0 0 30px rgba(255, 93, 177, 0.7), 0 14px 36px rgba(121, 83, 255, 0.42);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+button::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.2) 40%, transparent 100%);
+    transform: translateX(-120%);
+    transition: transform 0.6s ease;
+}
+
+button:hover {
+    transform: translateY(-1px) scale(1.03);
+    box-shadow: 0 0 38px rgba(255, 93, 177, 0.82), 0 18px 40px rgba(129, 92, 255, 0.5);
+    filter: brightness(1.05);
+}
+
+button:hover::before {
+    transform: translateX(120%);
+}
+
+button:active {
+    transform: scale(0.97);
+}
+
+.love-message {
+    color: #ffd9ee;
+    font-size: clamp(26px, 5vw, 42px);
+    font-weight: 900;
+    line-height: 1.2;
+    min-height: 90px;
+    margin: 30px auto 0;
+    opacity: 0;
+    transform: translateY(18px) scale(0.9);
+    text-shadow: 0 0 16px rgba(255, 99, 174, 0.95), 0 0 28px rgba(255, 211, 232, 0.9), 0 0 42px rgba(154, 112, 255, 0.5);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+    letter-spacing: 0.02em;
+}
+
+.love-message.show {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+@keyframes star-pulse {
+    from { opacity: 0.65; }
+    to { opacity: 1; }
+}
+
+@keyframes planet-orbit {
+    from { transform: scale(0.5) rotate(-30deg); }
+    to { transform: scale(2.2) rotate(0); }
+}
+
+@keyframes drift {
+    from { transform: translate(0, 0); }
+    to { transform: translate(-95px, -95px); }
+}
+
+@keyframes twinkle {
+    from { opacity: 0.65; }
+    to { opacity: 1; }
+}
+
+@media (max-width: 600px) {
+    .planet-showcase {
+        top: 14px;
+        left: 10px;
+        transform: scale(0.72);
+        transform-origin: top left;
+    }
+
+    .corner-message {
+        right: 12px;
+        bottom: 10px;
+        max-width: 170px;
+        font-size: 12px;
+    }
+}
